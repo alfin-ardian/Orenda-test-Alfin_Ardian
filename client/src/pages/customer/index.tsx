@@ -10,7 +10,15 @@ import {
   TablePagination,
   Button,
 } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { makeStyles } from "@material-ui/core/styles";
+
+const filterOptions = createFilterOptions({
+  matchFrom: "start",
+  stringify: (option: FilmOptionType) => option.title,
+});
 
 interface Column {
   id: "name" | "code" | "population" | "size" | "density";
@@ -46,6 +54,10 @@ const columns: readonly Column[] = [
   },
 ];
 
+interface FilmOptionType {
+  title: string;
+  year: number;
+}
 interface Data {
   name: string;
   code: string;
@@ -92,6 +104,10 @@ const useStyles = makeStyles({
     backgroundColor: "#efefef",
   },
 });
+const top100Films = [
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+];
 
 export default function StickyHeadTable() {
   const classes = useStyles();
@@ -136,6 +152,42 @@ export default function StickyHeadTable() {
                       {column.label}
                     </TableCell>
                   ))}
+                </TableRow>
+              </TableHead>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Stack spacing={2} sx={{ width: 300 }}>
+                      <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        disableClearable
+                        options={top100Films.map((option) => option.title)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Search Name"
+                            InputProps={{
+                              ...params.InputProps,
+                              type: "search",
+                            }}
+                          />
+                        )}
+                      />
+                    </Stack>
+                  </TableCell>
+                  <TableCell>
+                    <Autocomplete
+                      id="filter-demo"
+                      options={top100Films}
+                      getOptionLabel={(option) => option.title}
+                      filterOptions={filterOptions}
+                      sx={{ width: 300 }}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Filter" />
+                      )}
+                    />
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
