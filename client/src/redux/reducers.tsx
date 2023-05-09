@@ -8,6 +8,7 @@ import {
   ADD_CUSTOMER_SUCCESS,
   ADD_CUSTOMER_FAILURE,
 } from "./types";
+import { combineReducers } from "redux";
 
 const initialState: CustomerState = {
   customers: [],
@@ -15,7 +16,7 @@ const initialState: CustomerState = {
   error: null,
 };
 
-export const customerReducer = (
+export const customersReducer = (
   state = initialState,
   action: CustomerAction
 ): CustomerState => {
@@ -60,3 +61,7 @@ export const customerReducer = (
       return state;
   }
 };
+
+export default combineReducers({
+  customers: customersReducer,
+});
