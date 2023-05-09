@@ -1,22 +1,21 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Button } from "@material-ui/core";
-import DenseTable from "./components/DenseTable";
 import MainLayout from "./layouts/MainLayout";
+import Customer from "./pages/customer";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>
-        <Button variant="contained" color="primary">
-          Hello World
-        </Button>
-      </div>
-      <MainLayout />
+      <Router>
+        <Routes>
+          {/* <Route path="/"> */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Customer />} />
+          </Route>
+          {/* </Route> */}
+        </Routes>
+      </Router>
     </>
   );
 }
